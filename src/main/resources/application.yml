@@ -6,4 +6,19 @@ spring:
         driver-class: com.mysql.cj.jdbc.Driver
     jpa:
         database-platform: org.hibernate.dialect.MySQL57Dialect
-        generate-ddl: true
+        hibernate:
+            ddl-auto: update
+    devtools:
+        livereload:
+            enabled: true
+            port: 5555
+        restart:
+            enabled: true
+            poll-interval: 5s
+    thymeleaf:
+        enable-spring-el-compiler: true
+server:
+    error:
+        whitelabel:
+            enabled: false
+        path: /error

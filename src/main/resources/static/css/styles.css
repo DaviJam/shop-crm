@@ -1,4 +1,14 @@
 .container{
+    flex-flow: column;
     width: 250px;
     margin: 50px auto;
+}
+
+.button{
+    display: flex !important;
+    margin: 0 auto !important;
+}
+
+h1{
+    text-align: center;
 }

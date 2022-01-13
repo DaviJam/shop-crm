@@ -15,7 +15,7 @@ public class UserService {
     }
 
     public User getUser(String name){
-        return this.userRepository.findByName(name).orElse(null);
+        return this.userRepository.findByName(name);
     }
 
     public Boolean register(User user) {

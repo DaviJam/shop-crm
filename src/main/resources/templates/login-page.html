@@ -1,23 +1,25 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Serving Web Content</title>
+    <title>Shop CRM - Login</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css" integrity="sha512-+AdxWMqfOdtwMuXK482e5OgHYzN06s97n3NTAeAdTlUvlIgCBx3SUKvMculJIedylDfVCaQFdD6HaojI4aeBUA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 <div class="container">
-    <form class="ui form">
+    <h1>Connectez-vous à votre compte</h1>
+    <form class="ui form" action="/user/signin" method="post">
         <div class="field">
             <label>Identifiant</label>
-            <input type="text" name="id" placeholder="Identifiant">
+            <input type="text" name="name" placeholder="Identifiant">
         </div>
         <div class="field">
             <label>Mot de passe</label>
             <input type="password" name="password" placeholder="Mot de passe">
         </div>
-        <button class="ui button" type="submit">Submit</button>
+        <button class="ui button" type="submit">Connexion</button>
+        <p>Vous n'avez pas de compte? <a href="/user/register"> C'est par ici!</a></p>
     </form>
 </div>
 <script
@@ -25,5 +27,6 @@
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js" integrity="sha512-VYhOmOOgmYsSFb0oxQcqkRrm/YmAnwNcuahdvSfMaQW7JqWb9g6XUciSICYUEOd0C3N+s1fN+Kkn85q+iYsDew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script th:src="@{/js/app.js}"></script>
 </body>
 </html>
