@@ -6,7 +6,9 @@ services:
     depends_on:
       - db
     ports:
-      - "80:8080"
+      - 80:8080
+    networks:
+      - lan0
 
   db:
     image: mysql
@@ -16,5 +18,10 @@ services:
       MYSQL_USER: spring
       MYSQL_PASSWORD: spring
       MYSQL_DATABASE: shopcrm
-    ports:
-      - "3306:3309"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    networks:
+      - lan0
+
+networks:
+  lan0:
+    driver: bridge
