@@ -1,0 +1,20 @@
+version: '3.1'
+services:
+  server:
+    build: .
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "80:8080"
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_USER: spring
+      MYSQL_PASSWORD: spring
+      MYSQL_DATABASE: shopcrm
+    ports:
+      - "3306:3309"

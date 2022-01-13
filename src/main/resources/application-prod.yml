@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    username: spring
+    password: spring
+    url: jdbc:mysql://127.0.0.1:3309/shopcrm
+    driver-class: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    hibernate:
+      ddl-auto: update
+  thymeleaf:
+    enable-spring-el-compiler: true
+
+server:
+  error:
+    whitelabel:
+      enabled: false
+    path: /error
