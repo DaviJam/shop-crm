@@ -20,6 +20,26 @@
         </div>
         <button class="ui button" type="submit">Connexion</button>
         <p>Vous n'avez pas de compte? <a href="/user/register"> C'est par ici!</a></p>
+        <th:block th:if="${error} == 'true'">
+            <div class="ui message error">
+                <div class="header">Oops!</div>
+                <p th:text="${message}">message</p>
+            </div>
+            <script defer>
+                var message_popup = document.getElementsByClassName("message")[0];
+                message_popup.setAttribute("style","display:block");
+
+                setTimeout(()=>{
+                    var animation = message_popup.animate([
+                        {opacity: 1},
+                        {opacity: 0}
+                    ], {duration: 3000, easing: 'linear'});
+                    animation.onfinish = function(){
+                        message_popup.removeAttribute("style");
+                    }
+                });
+            </script>
+        </th:block>
     </form>
 </div>
 <script

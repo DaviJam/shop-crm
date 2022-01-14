@@ -6,22 +6,19 @@ services:
     depends_on:
       - db
     ports:
-      - 80:8080
-    networks:
-      - lan0
+      - 8080:80
+    network_mode: 'host'
 
   db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE handle error silently
     environment:
       MYSQL_USER: spring
       MYSQL_PASSWORD: spring
       MYSQL_DATABASE: shopcrm
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
-    networks:
-      - lan0
-
-networks:
-  lan0:
-    driver: bridge
+    ports:
+      - 3306:3306

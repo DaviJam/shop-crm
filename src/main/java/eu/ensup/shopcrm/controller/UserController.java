@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login(Model model){
         return "login-page";
     }
 
@@ -50,8 +50,13 @@ public class UserController {
             model.addAttribute("message", "Mot de passe erronée");
             ret = "redirect:/user/login";
             return ret;
+        } else if (fetchedUser == null){
+            model.addAttribute("message", "Vous n'avez pas de compte chez nous. Veuillez en créer un.");
+            model.addAttribute("error", "true");
+            ret = "login-page";
+        } else {
+            model.addAttribute("name", fetchedUser.getName());
         }
-        model.addAttribute("name", fetchedUser.getName());
         return ret;
     }
 
@@ -59,7 +64,6 @@ public class UserController {
     public String signup(User user, Model model){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         this.userService.register(user);
-        model.addAttribute("message", "Compte crée avec succès!");
         return "redirect:/user/login";
     }
 }
