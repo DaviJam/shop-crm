@@ -1,0 +1,53 @@
+---
+- name: playbook
+  hosts: local_web_server_1
+  become: yes
+
+  pre_tasks:
+    - name: Install aptitude using apt
+      apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+
+    - name: Install required system packages
+      apt: name={{ item }} state=latest update_cache=yes
+      loop:
+        [
+            "apt-transport-https",
+            "ca-certificates",
+            "curl",
+            "software-properties-common",
+            "python3-pip",
+            "python-apt",
+            "virtualenv",
+            "python-setuptools",
+        ]
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Update apt and install docker-ce and docker-compose
+      apt: name={{ item }} state=latest update_cache=yes
+      loop: [ "docker-ce","docker-compose" ]
+
+    - name: Install Python Docker Module
+      pip:
+        name: docker
+
+  tasks:
+    - name: git clone project
+      git:
+        repo: https://github.com/DaviJam/shop-crm.git
+        dest: /home/vagrant/shop-crm
+
+
+    - name: run docker-compose
+      community.docker.docker_compose:
+        project_src: /home/vagrant/shop-crm
+
+

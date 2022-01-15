@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   server:
-    build: .
+    image: dada971/shop-crm-server
     restart: always
     depends_on:
       - db
@@ -15,10 +15,6 @@ services:
     restart: always
     cap_add:
       - SYS_NICE  # CAP_SYS_NICE handle error silently
-    environment:
-      MYSQL_USER: spring
-      MYSQL_PASSWORD: spring
-      MYSQL_DATABASE: shopcrm
-      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    env_file: .env
     ports:
       - 3306:3306
