@@ -7,7 +7,7 @@ services:
       - db
     ports:
       - 8080:80
-    network_mode: 'host'
+#    network_mode: 'host'
 
   db:
     image: mysql
