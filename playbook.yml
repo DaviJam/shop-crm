@@ -2,6 +2,13 @@
 - name: playbook
   hosts: local_web_server_1
   become: yes
+  vars_files:
+    - private_settings.yml
+  environment:
+    MYSQL_USER: '{{MYSQL_USER}}'
+    MYSQL_PASSWORD: '{{MYSQL_PASSWORD}}'
+    MYSQL_DATABASE: '{{MYSQL_DATABASE}}'
+    MYSQL_ALLOW_EMPTY_PASSWORD: '{{ MYSQL_ALLOW_EMPTY_PASSWORD }}'
 
   pre_tasks:
     - name: Install aptitude using apt
@@ -19,6 +26,7 @@
             "python-apt",
             "virtualenv",
             "python-setuptools",
+            "net-tools"
         ]
 
     - name: Add Docker GPG apt Key
