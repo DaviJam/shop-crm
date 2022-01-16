@@ -14,5 +14,5 @@ spring:
 server:
   error:
     whitelabel:
-      enabled: false
+      enabled: true
     path: /error
