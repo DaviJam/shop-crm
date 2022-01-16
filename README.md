@@ -82,7 +82,7 @@ WORKDIR ./target
 CMD ["java", "-jar -Dspring.profiles.active=prod", "shop-crm-0.0.1-SNAPSHOT.jar"]
 ```
 
-#### Creating the docker image and hosting it on the docker hub
+#### 2. Creating the docker image and hosting it on the docker hub
 1) Login to docker hub from host
     > docker login
 
@@ -94,3 +94,29 @@ CMD ["java", "-jar -Dspring.profiles.active=prod", "shop-crm-0.0.1-SNAPSHOT.jar"
 
 4) Push image to docker hub
     > docker push dada971/shop-crm-server
+
+#### 3. Create docker compose file to add a MySQL database container
+```
+version: '3.4'
+services:
+  server:
+    image: dada971/shop-crm-server # use image from docker hub
+    restart: always     # restart if failure at runtime
+    depends_on:
+      - db              # indicate that the server depends on our database defined as db
+    network_mode: host  # indicate that the server should be exposed to the host network 
+
+  db:
+    image: mysql        # this service uses the mysql docker image
+    command: --default-authentication-plugin=mysql_native_password # use the native password generator to define a password
+    restart: always     # restart if failure at runtime
+    cap_add:
+      - SYS_NICE        # CAP_SYS_NICE handle error silently
+    environment:        # environment variable for the MySQL server
+      - MYSQL_USER=${MYSQL_USER} 
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ALLOW_EMPTY_PASSWORD=no
+    ports:              # indicate that the port should be exposed to the host. TYhis allows the server to acces the database.
+      - 3306:3306
+```
