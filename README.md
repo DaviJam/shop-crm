@@ -120,3 +120,61 @@ services:
     ports:              # indicate that the port should be exposed to the host. TYhis allows the server to acces the database.
       - 3306:3306
 ```
+
+### 2.Running a mysql-server from docker
+#### a) Run on local port 3309
+> docker run -d --name mysql-shop-crm -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=shopcrm -e MYSQL_USER=spring -e MYSQL_PASSWORD=spring -p 3309:3306 mysql:latest
+
+#### b) Access the container 
+> docker exec -it mysql-shop-crm /bin/sh
+
+#### c) Recall on mysql commands
+##### Show content of a table
+> select * from \<table\>;
+ 
+##### Delete something from a table
+> delete from \<table\> where \<colum\>=\<value\>;
+
+### 3. Adding spring security
+#### a) Add the maven dependency 
+```
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<version>2.6.5</version>
+		</dependency>
+```
+From here, without adding any configuration, a password is generated in the ruuning program logs.
+The default user is 'user'. The password is generated one.
+
+#### b) Configuration authorization to access our resources and user authentication.
+##### 1 - Create a new class that extends WebSecurityConfigurerAdapter interface with the following annotation.
+```
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter
+```
+##### 2 - Adding our custom configuration by overriding the configure method
+```
+@Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/login","/home").permitAll()
+                .antMatchers("/user/**").hasAuthority("ROLE_USER")
+                .antMatchers("/register").hasAuthority("ROLE_ADMIN")
+                .and()
+                .formLogin()
+                    .loginPage("/login").defaultSuccessUrl("/user/work").failureUrl("/error")
+                    .and()
+                    .logout()
+                .and()
+                .exceptionHandling()
+                    .accessDeniedHandler(this.accessDeniedHandler)
+                    .authenticationEntryPoint(this.unauthorizedHandler);
+    }
+```
+ The way this should by understood is the following :
+ We authorize request (***authorizeRequests()***) to the resource accessible with URI "/login","/home"
+ 
+ 
