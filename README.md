@@ -173,9 +173,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                     .authenticationEntryPoint(this.unauthorizedHandler);
     }
 ```
-The way this should by understood is the following : <br>
-We authorize request (***authorizeRequests()***) to the resource accessible with URI "/login","/home" and everybody can access these resources without any authorization.
- 
+The way this should be understood is the following : <br>
+
+```
+// We authorize request (***authorizeRequests()***) to the resource accessible with URI "/login","/home" and everybody can access these resources without any authorization.
+http.authorizeRequests().antMatchers("/login","/home").permitAll()
+
+// We authorize request (***authorizeRequests()***) to the resources accessible with URI "/user/**", only to users with 'ROLE_USER' authorization.
+http.authorizeRequests().antMatchers("/user/**").hasAuthority("ROLE_USER")
+```
+
  
 ##### 3 - Configuring a specific user (no for production) - in memory
 ```
