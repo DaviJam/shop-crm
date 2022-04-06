@@ -175,6 +175,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     }
 ```
  The way this should by understood is the following :
- We authorize request (***authorizeRequests()***) to the resource accessible with URI "/login","/home"
+ We authorize request (***authorizeRequests()***) to the resource accessible with URI "/login","/home" and everybody can access these resources without any authorization.
+ 
  
  
