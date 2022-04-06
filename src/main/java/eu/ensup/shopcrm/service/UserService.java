@@ -1,6 +1,6 @@
 package eu.ensup.shopcrm.service;
 
-import eu.ensup.shopcrm.domain.User;
+import eu.ensup.shopcrm.domain.Users;
 import eu.ensup.shopcrm.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +14,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getUser(String name){
-        return this.userRepository.findByName(name);
+    public Users getUser(String name){
+        return this.userRepository.findByusername(name);
     }
 
-    public Boolean register(User user) {
+    public Boolean register(Users user) {
         return this.userRepository.save(user) != null;
     }
 }
