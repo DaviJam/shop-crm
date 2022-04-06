@@ -150,7 +150,6 @@ The default user is 'user'. The password is generated one.
 #### b) Configuration authorization to access our resources and user authentication.
 ##### 1 - Create a new class that extends WebSecurityConfigurerAdapter interface with the following annotation.
 ```
-@Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 ```
@@ -174,8 +173,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                     .authenticationEntryPoint(this.unauthorizedHandler);
     }
 ```
- The way this should by understood is the following :
- We authorize request (***authorizeRequests()***) to the resource accessible with URI "/login","/home" and everybody can access these resources without any authorization.
+The way this should by understood is the following : <br>
+We authorize request (***authorizeRequests()***) to the resource accessible with URI "/login","/home" and everybody can access these resources without any authorization.
  
  
  
