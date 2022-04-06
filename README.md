@@ -177,4 +177,15 @@ The way this should by understood is the following : <br>
 We authorize request (***authorizeRequests()***) to the resource accessible with URI "/login","/home" and everybody can access these resources without any authorization.
  
  
- 
+##### 3 - Configuring a specific user (no for production) - in memory
+```
+@Override
+protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+auth.inMemoryAuthentication().withUser("admin").roles("ADMIN").password(bcryptPasswordEncoder.encode("pass"));
+}
+```
+Here, the user "admin" has the ADMIN role and a clear password.
+
+##### 3 - Configuring a specific user (no for production) - in database
+
+
